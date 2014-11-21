@@ -19,58 +19,39 @@
     
     ["räksmörgås"] "räksmörgås"
     
-    ["IP" "Address"] "IPAddress"
+    ["IP" "Address"] "IPAddress"))
     
-    ["Adler" "32"]         "Adler32"
-    ["Inet" "4" "Address"] "Inet4Address"
-    ["Arc" "2" "D"]        "Arc2D"
-    ["a" "123b"]           "a123b"
-    ["A" "123" "B"]        "A123B"))
-
 (def zip (partial map vector))
 
 (deftest format-case-test
   (testing "examples"
     (are [x y] (= x y)
-      'FluxCapacitor  (csk/->CamelCase 'flux-capacitor)
-      "I_AM_CONSTANT" (csk/->SNAKE_CASE "I am constant")
-      :object-id      (csk/->kebab-case :object_id)
-      "X-SSL-Cipher"  (csk/->HTTP-Header-Case "x-ssl-cipher")
-      :object-id      (csk/->kebab-case-keyword "object_id")))
+      'FluxCapacitor  (csk/camel-case 'flux-capacitor)
+      "i_am_constant" (csk/snake-case "I am constant")
+      :object-id      (csk/kebab-case :object_id)
+      "X-SSL-Cipher"  (csk/http-header-case "x-ssl-cipher")))
 
   (testing "rejection of namespaced keywords and symbols"
-    (is (thrown? ExceptionInfo (csk/->CamelCase (keyword "a" "b"))))
-    (is (thrown? ExceptionInfo (csk/->CamelCase (symbol  "a" "b")))))
+    (is (thrown? ExceptionInfo (csk/camel-case (keyword "a" "b"))))
+    (is (thrown? ExceptionInfo (csk/camel-case (symbol  "a" "b")))))
 
   (testing "all the type preserving functions"
     (let
       [inputs    ["FooBar"
-                  "fooBar"
-                  "FOO_BAR"
-                  "Foo_bar"
                   "foo_bar"
                   "foo-bar"
                   "Foo_Bar"]
-       functions [csk/->CamelCase
-                  csk/->camelCase
-                  csk/->SNAKE_CASE
-                  csk/->Snake_case
-                  csk/->snake_case
-                  csk/->kebab-case
-                  csk/->Camel_Snake_Case]
+       functions [csk/camel-case
+                  csk/snake-case
+                  csk/kebab-case
+                  csk/camel-snake-case]
        formats   [identity keyword symbol]]
 
       (doseq [input inputs, format formats, [output function] (zip inputs functions)]
-        (is (= (format output) (function (format input)))))))
-
-  (testing "some of the type converting functions"
-    (are [x y] (= x y)
-      :FooBar   (csk/->CamelCaseKeyword  'foo-bar)
-      "FOO_BAR" (csk/->SNAKE_CASE_STRING :foo-bar)
-      'foo-bar  (csk/->kebab-case-symbol "foo bar"))))
+        (is (= (format output) (function (format input))))))))
 
 (deftest http-header-case-test
-  (are [x y] (= x (csk/->HTTP-Header-Case y))
+  (are [x y] (= x (csk/http-header-case y))
     "User-Agent"       "user-agent"
     "DNT"              "dnt"
     "Remote-IP"        "remote-ip"

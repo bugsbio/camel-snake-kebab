@@ -35,11 +35,8 @@
 
 ;; These are fully qualified to workaround some issue with ClojureScript:
 
-(defconversion "CamelCase"        clojure.string/capitalize clojure.string/capitalize "")
-(defconversion "Camel_Snake_Case" clojure.string/capitalize clojure.string/capitalize "_")
-(defconversion "camelCase"        clojure.string/lower-case clojure.string/capitalize "" )
-(defconversion "Snake_case"       clojure.string/capitalize clojure.string/lower-case "_")
-(defconversion "SNAKE_CASE"       clojure.string/upper-case clojure.string/upper-case "_")
-(defconversion "snake_case"       clojure.string/lower-case clojure.string/lower-case "_")
+(defconversion "camel-case"       clojure.string/capitalize clojure.string/capitalize "")
+(defconversion "camel-snake-case" clojure.string/capitalize clojure.string/capitalize "_")
+(defconversion "snake-case"       clojure.string/lower-case clojure.string/lower-case "_")
 (defconversion "kebab-case"       clojure.string/lower-case clojure.string/lower-case "-")
-(defconversion "HTTP-Header-Case" camel-snake-kebab.internals.misc/capitalize-http-header camel-snake-kebab.internals.misc/capitalize-http-header "-")
+(defconversion "http-header-case" camel-snake-kebab.internals.misc/capitalize-http-header camel-snake-kebab.internals.misc/capitalize-http-header "-")

@@ -1,10 +1,11 @@
-(defproject camel-snake-kebab "0.2.5"
-  :description "A library for word case conversions."
-  :url "https://github.com/qerub/camel-snake-kebab"
+(defproject bugsbio/camel-snake-kebab "0.2.5"
+  :description "A fork of qerub's library for word case conversions."
+  :url "https://github.com/bugsbio/camel-snake-kebab"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
+  :signing {:gpg-key "CF73E6ED"}
   :scm {:name "git"
-        :url "https://github.com/qerub/camel-snake-kebab"}
+        :url "https://github.com/bugsbio/camel-snake-kebab"}
 
   :dependencies []
 
